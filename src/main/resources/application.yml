@@ -1,0 +1,16 @@
+#app config
+spring:
+  application:
+    name: TicTacToe
+    admin:
+      enabled: off
+  main:
+    web-application-type: none
+    banner-mode: off
+#debug
+debug: false
+
+#logging
+#logging:
+#  pattern:
+#    console:
