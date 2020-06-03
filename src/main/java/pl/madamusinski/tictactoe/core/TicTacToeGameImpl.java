@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import pl.madamusinski.tictactoe.domain.TicTacToeGameControl;
 import pl.madamusinski.tictactoe.domain.board.Board;
 import pl.madamusinski.tictactoe.domain.player.HumanPlayer;
 import pl.madamusinski.tictactoe.domain.player.Player;
@@ -25,29 +26,35 @@ public class TicTacToeGameImpl implements TicTacToeGame {
     private final Environment env;
     private final Scanner scanner;
     private final BoardPrinterImpl boardPrinter;
-    private Set<Player> players;
+    private final TicTacToeGameControl<Player> ticTacToeGameControl;
+    private List<Player> players;
     private Board board;
 
     public TicTacToeGameImpl(Environment env,
                              @Qualifier(value = "playerEntryInput") Scanner scanner,
-                             BoardPrinterImpl boardPrinter){
+                             BoardPrinterImpl boardPrinter,
+                             TicTacToeGameControl<Player> ticTacToeGameControl){
         this.env = env;
         this.scanner = scanner;
         this.boardPrinter = boardPrinter;
+        this.ticTacToeGameControl = ticTacToeGameControl;
     }
 
     @Override
-    public void play() {
+    public void play() throws Exception {
         logger.info("Starting {} game", env.getProperty("spring.application.name"));
         System.out.println("rozmiar planszy to AxB: "
                 + env.getProperty("spring.application.board.height") + " x "
                 + env.getProperty("spring.application.board.width"));
-        initGame();
+        initGame(); // Initialize players, board
         boardPrinter.printBoard(board);
+        Player currentPlayer = ticTacToeGameControl.currentPlayerTurn();
+        System.out.println("Current player: " + ((HumanPlayer) currentPlayer).getName());
+
     }
 
     private void initGame(){
-        players = new HashSet<>();
+        players = new ArrayList<>();
         players.add(new HumanPlayer("Player1", 'X'));
         players.add(new HumanPlayer("Player2", 'O'));
         Map<String, Map<String, Character>> presetBoard = new HashMap<String, Map<String, Character>>(){{
@@ -68,5 +75,12 @@ public class TicTacToeGameImpl implements TicTacToeGame {
             }});
         }};
         board = new Board(presetBoard);
+        setStartingPlayer(players.get(0));
+        ticTacToeGameControl.setPlayerWithTurn(players.get(0));
     }
+
+    private void setStartingPlayer(Player player){
+        player.setMyTurn(true);
+    }
+
 }

@@ -25,6 +25,7 @@ public class HumanPlayer implements Player {
         return isMyTurn;
     }
 
+    @Override
     public void setMyTurn(boolean isMyTurn){
         this.isMyTurn = isMyTurn;
     }

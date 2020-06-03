@@ -22,7 +22,7 @@ public class TictactoeApplication implements CommandLineRunner {
         this.ticTacToeGame = ticTacToeGame;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         SpringApplication app = new SpringApplication(TictactoeApplication.class);
         Environment env = app.run(args).getEnvironment();
         logger.info("Initializing {}", env.getProperty("spring.application.name"));
