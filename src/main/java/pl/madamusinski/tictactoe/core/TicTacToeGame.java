@@ -5,5 +5,5 @@ package pl.madamusinski.tictactoe.core;
  * TicTacToe must implement this interface to complete contract for tictactoe game
  */
 public interface TicTacToeGame {
-    void startGame();
+    void play();
 }

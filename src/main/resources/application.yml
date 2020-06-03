@@ -4,6 +4,9 @@ spring:
     name: TicTacToe
     admin:
       enabled: off
+    board:
+      height: 3
+      width: 3
   main:
     web-application-type: none
     banner-mode: off
@@ -14,3 +17,4 @@ debug: false
 #logging:
 #  pattern:
 #    console:
+

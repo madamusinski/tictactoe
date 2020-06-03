@@ -27,7 +27,7 @@ public class TictactoeApplication implements CommandLineRunner {
         Environment env = app.run(args).getEnvironment();
         logger.info("Initializing {}", env.getProperty("spring.application.name"));
         logger.info("Debuggin is {}", (env.getProperty("debug").equals("true")) ? "on" : "off");
-        ticTacToeGame.startGame();
+        ticTacToeGame.play();
     }
 
 
