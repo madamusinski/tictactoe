@@ -6,19 +6,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-import pl.madamusinski.tictactoe.core.TicTacToeGameImpl;
-
-import java.io.IOException;
-import java.util.Scanner;
+import pl.madamusinski.tictactoe.core.TicTacToeGameRunnerImpl;
 
 @SpringBootApplication
 public class TictactoeApplication implements CommandLineRunner {
 
     private static Logger logger = LoggerFactory.getLogger(TictactoeApplication.class);
-    private static TicTacToeGameImpl ticTacToeGame;
+    private static TicTacToeGameRunnerImpl ticTacToeGame;
 
-    public TictactoeApplication(TicTacToeGameImpl ticTacToeGame){
+
+
+    public TictactoeApplication(TicTacToeGameRunnerImpl ticTacToeGame){
         this.ticTacToeGame = ticTacToeGame;
     }
 
@@ -31,8 +29,20 @@ public class TictactoeApplication implements CommandLineRunner {
     }
 
 
+    /**
+     *
+     * @param args, arg0 tells game how many players there should be
+     *              arg1 tells game what width of board should be
+     *              arg2 tells game what height of board should be
+     * @throws Exception
+     */
     @Override
-    public void run(String... args) throws Exception {
-
+    public void run(String... args){
+        if(args.length!=0){
+            ticTacToeGame.setGameConfig(
+                    Integer.valueOf(args[0]),
+                    Integer.valueOf(args[1]),
+                    Integer.valueOf(args[2]));
+        }
     }
 }
