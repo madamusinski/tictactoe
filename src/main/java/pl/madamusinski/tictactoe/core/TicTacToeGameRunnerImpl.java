@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import pl.madamusinski.tictactoe.core.board.factory.BoardFactory;
 import pl.madamusinski.tictactoe.core.board.factory.TicTacToeStandardBoardFactory;
 import pl.madamusinski.tictactoe.core.config.GameConfig;
+import pl.madamusinski.tictactoe.domain.Field;
 import pl.madamusinski.tictactoe.domain.board.Board;
 import pl.madamusinski.tictactoe.domain.board.TicTacToeStandardBoard;
 import pl.madamusinski.tictactoe.domain.player.HumanPlayer;
@@ -65,10 +66,94 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
     }
 
     private boolean checkWinCondition(){
-        if(movesLeft==0)
+        if(possibleMovesLeft() || filledSignsInaRow())
             return false;
         else
             return true;
+    }
+
+    private boolean filledSignsInaRow() {
+        Field[][] boardCopy = ((TicTacToeStandardBoard) board).getBoardField();
+        char playerSign;
+        int row = 0;
+        int column = 0;
+        int winCount = 0;
+
+        //check rows
+
+        for (row = 0; row < boardCopy.length; row++) {
+            playerSign = boardCopy[row][0].getSignDisplay();
+            if (playerSign != gameConfig.getEmptyFieldSign()) {
+                for (column = 0; column < boardCopy[row].length; column++) {
+                    if (boardCopy[row][column].getSignDisplay() == playerSign)
+                        winCount++;
+                }
+                if (winCount >= gameConfig.getBoardWidth()) {
+                    System.out.println("Player with sign " + playerSign + " wins!");
+                    return true;
+                } else {
+                    winCount = 0;
+                }
+            }
+        }
+
+        //check columns
+        row = 0;
+        column = 0;
+        for (column = 0; column < boardCopy.length; column++) {
+            playerSign = boardCopy[0][column].getSignDisplay();
+            if (playerSign != gameConfig.getEmptyFieldSign()) {
+                for (row = 0; row < boardCopy[column].length; row++) {
+                    if (boardCopy[row][column].getSignDisplay() == playerSign)
+                        winCount++;
+                    }
+                    if (winCount >= gameConfig.getBoardWidth()) {
+                        System.out.println("Player with sign " + playerSign + " wins!");
+                        return true;
+                    } else {
+                        winCount = 0;
+                    }
+                }
+            }
+
+            //check diagonal left to right
+            playerSign = boardCopy[0][0].getSignDisplay();
+            winCount = 0;
+            if(playerSign!=gameConfig.getEmptyFieldSign()){
+                for(int i = 0; i<gameConfig.getBoardWidth(); i++){
+                    if(boardCopy[i][i].getSignDisplay()==playerSign){
+                        winCount++;
+                    }
+                    if(winCount>=gameConfig.getBoardWidth()){
+                        System.out.println("Player with sign " + playerSign + " wins!");
+                        return true;
+                    }
+                }
+            }
+
+        //check diagonal right to left
+        playerSign = boardCopy[0][2].getSignDisplay();
+        winCount = 0;
+        if(playerSign!=gameConfig.getEmptyFieldSign()){
+            for(int i = 0; i<gameConfig.getBoardWidth(); i++){
+                if(boardCopy[i][2-i].getSignDisplay()==playerSign){
+                    winCount++;
+                }
+                if(winCount>=gameConfig.getBoardWidth()){
+                    System.out.println("Player with sign " + playerSign + " wins!");
+                    return true;
+                }
+            }
+        }
+
+            return false;
+    }
+
+    private boolean possibleMovesLeft(){
+        if(movesLeft==0)
+            return true;
+        else
+            return false;
     }
 
 
