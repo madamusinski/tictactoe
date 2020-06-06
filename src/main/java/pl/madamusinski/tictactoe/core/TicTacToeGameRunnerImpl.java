@@ -54,7 +54,6 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
         initGame(); // Initialize players, board
         boardPrinter.printBoard(board);
         currentPlayer = (HumanPlayer)playerTurns.poll();
-
         while(checkWinCondition()){
             System.out.println(currentPlayer.getName() + "' turn, type in field to mark: ");
             makeTurn(false);
