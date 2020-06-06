@@ -9,20 +9,9 @@ import java.util.Map;
 @Component
 public class TicTacToeStandardBoard implements Board{
 
-    private Map<String, Map<String, Character>> boardMap;
     private Field[][] boardField;
 
-    public TicTacToeStandardBoard(){
-
-    }
-
-
-    public void setBoard(Map<String, Map<String, Character>> boardMap){
-        this.boardMap = boardMap;
-    }
-
-    public Map getBoardMap(){
-        return boardMap;
+    public TicTacToeStandardBoard() {
     }
 
     @Override

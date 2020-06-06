@@ -36,7 +36,6 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
     private int movesLeft;
 
 
-
     public TicTacToeGameRunnerImpl(Environment env,
                                    @Qualifier(value = "playerEntryInput") Scanner scanner,
                                    BoardPrinterImpl boardPrinter,
@@ -58,18 +57,23 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
 
         while(checkWinCondition()){
             System.out.println(currentPlayer.getName() + "' turn, type in field to mark: ");
-            boolean turnFinished = false;
-            makeTurn(turnFinished);
+            makeTurn(false);
             boardPrinter.printBoard(board);
         }
 
     }
 
     private boolean checkWinCondition(){
-        if(possibleMovesLeft() || filledSignsInaRow())
+        if(filledSignsInaRow())
             return false;
         else
-            return true;
+            if(possibleMovesLeft()){
+                System.out.println("Remis! Nikt nie wygrał!");
+                return false;
+            }
+
+            else
+                return true;
     }
 
     private boolean filledSignsInaRow() {
@@ -157,15 +161,14 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
     }
 
 
-    private void makeTurn(boolean isFinished){
+    private void makeTurn(boolean isTurnFinished){
         String input;
-        while(!isFinished){
+        while(!isTurnFinished){
             try{
                 input = scanner.next("[A-Z]{1}[1-9]{1}");
-                System.out.println(input);
                 if(findField(input)){
                     setMarker(input);
-                    isFinished = true;
+                    isTurnFinished = true;
                     if(currentPlayer!=playerTurns.peek()){
                         playerTurns.add(currentPlayer);
                         currentPlayer = (HumanPlayer)playerTurns.poll();
@@ -216,8 +219,10 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
     private void initGame(){
         HumanPlayer player1 = new HumanPlayer("Player1", 'X');
         HumanPlayer player2 = new HumanPlayer("Player2", 'O');
+        HumanPlayer player3 = new HumanPlayer("Player3", 'Y');
         playerTurns.add(player1);
         playerTurns.add(player2);
+        playerTurns.add(player3);
         board = (TicTacToeStandardBoard)boardFactory.createBoard(gameConfig.getBoardWidth(),
                 gameConfig.getBoardHeight(), gameConfig.getEmptyFieldSign());
         movesLeft = gameConfig.getBoardHeight() * gameConfig.getBoardWidth();

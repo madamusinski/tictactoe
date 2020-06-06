@@ -16,11 +16,12 @@ public class TicTacToeStandardBoardFactory implements BoardFactory<Board> {
 
     @Autowired
     Environment env;
+    private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     @Override
     public TicTacToeStandardBoard createBoard(int boardWidth, int boardHeight, char emptyFieldFiller){
         TicTacToeStandardBoard board = new TicTacToeStandardBoard();
-        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
         Field[][] fieldBoard = new Field[boardHeight][boardWidth];
         for(int row = 1; row<=boardHeight; row++){
             for(int column = 1; column<=boardWidth; column++){
