@@ -21,8 +21,4 @@ public class BoardPrinterImpl implements BoardPrinter<Board> {
                 System.out.println();
         }
     }
-
-    private void printRow(){
-
-    }
 }
