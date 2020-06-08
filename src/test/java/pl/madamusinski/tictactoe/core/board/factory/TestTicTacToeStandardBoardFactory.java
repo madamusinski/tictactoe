@@ -14,8 +14,8 @@ import pl.madamusinski.tictactoe.domain.board.TicTacToeStandardBoard;
 @SpringBootTest
 public class TestTicTacToeStandardBoardFactory {
 
-    BoardFactory<Board> boardFactory;
-    TicTacToeStandardBoard testBoard;
+    private BoardFactory<Board> boardFactory;
+    private TicTacToeStandardBoard testBoard;
 
     @BeforeEach
     public void init(){

@@ -13,7 +13,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pl.madamusinski.tictactoe.core.board.factory.TicTacToeStandardBoardFactory;
 import pl.madamusinski.tictactoe.domain.board.Board;
 import pl.madamusinski.tictactoe.domain.board.TicTacToeStandardBoard;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -22,12 +21,11 @@ import java.io.PrintStream;
 public class TestBoardPrinterImpl {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    Board testBoard;
+    private Board testBoard;
     @Autowired
-    TicTacToeStandardBoardFactory standardBoardFactory;
+    private TicTacToeStandardBoardFactory standardBoardFactory;
     @Autowired
-    BoardPrinterImpl boardPrinter;
-
+    private BoardPrinterImpl boardPrinter;
 
     @BeforeEach
     public void init(){

@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class TestHumanPlayerSpawner {
 
     @Autowired
-    HumanPlayerSpawner humanPlayerSpawner;
+    private HumanPlayerSpawner humanPlayerSpawner;
 
     @Test
     public void testNumberOfSpawnedPlayers(){

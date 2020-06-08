@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class TestScannerUtil {
 
     @Autowired
-    ScannerUtil scannerUtil;
+    private ScannerUtil scannerUtil;
 
     @Test
     public void testScannerInstanceReturned(){

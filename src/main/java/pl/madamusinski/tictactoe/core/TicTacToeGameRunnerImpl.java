@@ -100,10 +100,10 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
      */
 
     private boolean checkWinCondition(){
-        if(filledSignsInaRow())
+        if(filledSignsInaRow(board))
             return false;
         else
-            if(possibleMovesLeft()){
+            if(possibleMovesLeft(movesLeft)){
                 System.out.println("This game has ended with a tie, nobody wins!");
                 return false;
             }
@@ -118,8 +118,8 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
      * method that checks for victory of player scoring in a row series of his marked fields on board
      * @return true if condition is met otherwise returns false
      */
-    private boolean filledSignsInaRow() {
-        Field[][] boardCopy = ((TicTacToeStandardBoard) board).getBoardField();
+    private boolean filledSignsInaRow(Board checkBoard) {
+        Field[][] boardCopy = ((TicTacToeStandardBoard) checkBoard).getBoardField();
         char playerSign;
         int row = 0;
         int column = 0;
@@ -199,8 +199,8 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
      * this method checks if there are any moves left on board
      * @return true if no more moves are left otherwise returns false if game can continue
      */
-    private boolean possibleMovesLeft(){
-        if(movesLeft==0)
+    private boolean possibleMovesLeft(int possibleMovesLeft){
+        if(possibleMovesLeft==0)
             return true;
         else
             return false;
@@ -214,9 +214,9 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
         String input;
         while(!isTurnFinished){
             try{
-                input = scanner.next("[A-Z]{1}[1-9]{1}");
-                if(findField(input)){
-                    setMarker(input);
+                input = getPlayerInput();
+                if(findField(input, board)){
+                    setMarker(input, board);
                     isTurnFinished = true;
                 }
             }catch(InputMismatchException e){
@@ -226,6 +226,10 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
         }
     }
 
+    private String getPlayerInput(){
+        return scanner.next("[A-Z]{1}[1-9]{1}");
+    }
+
     /**
      * method responsble for finding an empty field checking before player mark whether field has
      * empty field marker otherwise returns false
@@ -233,12 +237,12 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
      * @returntrue if field is free returns true otherwise returns false
      * if field is already marked by a player
      */
-    private boolean findField(String coordinate){
-        TicTacToeStandardBoard boardCopy = (TicTacToeStandardBoard)board.getBoard();
+    private boolean findField(String coordinate, Board boardToSearch){
+        TicTacToeStandardBoard boardCopy = (TicTacToeStandardBoard)boardToSearch.getBoard();
         for(int row = 0; row<boardCopy.getBoardField().length; row++){
             for(int column = 0; column<boardCopy.getBoardField()[row].length; column++){
                 if(coordinate.equals(boardCopy.getBoardField()[row][column].getCoordinate())){
-                    if(boardCopy.getBoardField()[row][column].getSignDisplay()=='.'){
+                    if(boardCopy.getBoardField()[row][column].getSignDisplay()==gameConfig.getEmptyFieldSign()){
                         return true;
                     }else{
                         System.out.println("This field with coordinates: "
@@ -257,8 +261,8 @@ public class TicTacToeGameRunnerImpl implements TicTacToeGameRunner {
      * method responsible for marking cell by currentplayer's mark
      * @param coordinate coordinate of Field
      */
-    private void setMarker(String coordinate){
-        TicTacToeStandardBoard boardCopy = (TicTacToeStandardBoard)board.getBoard();
+    private void setMarker(String coordinate, Board markBoard){
+        TicTacToeStandardBoard boardCopy = (TicTacToeStandardBoard)markBoard.getBoard();
         for(int row = 0; row<boardCopy.getBoardField().length; row++){
             for(int column = 0; column<boardCopy.getBoardField()[row].length; column++){
                 if(coordinate.equals(boardCopy.getBoardField()[row][column].getCoordinate())){

@@ -11,8 +11,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 public class TestHumanPlayer {
 
+    private HumanPlayer testPlayer;
 
-    HumanPlayer testPlayer;
+
     @BeforeEach
     public void init(){
         testPlayer = new HumanPlayer("Player Test", 'T');

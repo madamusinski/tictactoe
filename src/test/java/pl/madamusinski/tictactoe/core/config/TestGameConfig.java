@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class TestGameConfig {
 
-    GameConfig gameConfig;
+    private GameConfig gameConfig;
 
     @BeforeEach
     public void init(){
