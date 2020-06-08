@@ -16,7 +16,9 @@ public class BoardPrinterImpl implements BoardPrinter<Board> {
         Field[][] fieldBoard = ((TicTacToeStandardBoard) board).getBoardField();
         for(int row = 0; row<fieldBoard.length; row++){
             for(int column = 0; column<fieldBoard[row].length; column++){
-                System.out.print(fieldBoard[row][column].getSignDisplay() + " ");
+                    System.out.print(fieldBoard[row][column].getSignDisplay());
+                if(column<fieldBoard[row].length-1)
+                    System.out.print(" ");
             }
                 System.out.println();
         }
